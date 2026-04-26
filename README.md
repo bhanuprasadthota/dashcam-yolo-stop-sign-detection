@@ -1,26 +1,70 @@
-# DashCam-video-Analysis
-To create a powerful machine learning (ML) model for detecting stop signs in live dash camera footage using a pretrained YOLO (You Only Look Once) model, follow these steps:
+# DashCam YOLOv3 Stop Sign Detection
 
-**Step 1: Install Necessary Libraries**
-Ensure you have Python installed and the required libraries by running the following commands:
+Guide and configuration for building a real-time stop sign detector using a pretrained YOLOv3 model on dash camera footage with OpenCV.
+
+## Overview
+
+This project demonstrates how to apply YOLOv3 object detection to live or recorded dash camera footage to detect stop signs. It uses the COCO-pretrained YOLOv3 weights and processes frames in real time with bounding box overlays.
+
+## How It Works
+
+1. Load the YOLOv3 model using the provided `yolov3.cfg` and COCO class labels (`coco.names`)
+2. Load dash camera video footage (file path or live feed)
+3. Run object detection on each frame
+4. Filter detections for the `stop sign` class
+5. Apply non-maximum suppression to remove duplicate boxes
+6. Overlay bounding boxes and display annotated video
+
+## Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| Python | Core language |
+| YOLOv3 | Pretrained object detection model |
+| OpenCV | Video capture and frame processing |
+| NumPy | Array operations |
+
+## Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/bhanuprasadthota/dashcam-yolo-stop-sign-detection.git
+   cd dashcam-yolo-stop-sign-detection
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install opencv-python-headless numpy
+   ```
+
+3. Download YOLOv3 weights:
+   ```bash
+   wget https://pjreddie.com/media/files/yolov3.weights
+   ```
+
+4. Run detection on your footage:
+   ```python
+   import cv2, numpy as np
+
+   net = cv2.dnn.readNet(yolov3.weights, yolov3.cfg)
+   with open(coco.names) as f:
+       classes = f.read().strip().split(
+)
+
+   cap = cv2.VideoCapture(your_dashcam_video.mp4)
+   # ... detection loop
+   ```
+
+## Files
+
 ```
-pip install opencv-python-headless
-pip install numpy
+├── yolov3.cfg    # YOLOv3 model architecture config
+├── coco.names    # 80 COCO class labels (includes stop sign)
+└── README.md     # This file
 ```
 
-**Step 2: Download YOLOv3 Weights and Configuration**
-You'll need the YOLOv3 weights (`yolov3.weights`) and the configuration file (`yolov3.cfg`). These files can be obtained from the official YOLO website or a repository that hosts YOLOv3 weights.
+> Note: `yolov3.weights` is not included due to file size. Download separately from pjreddie.com.
 
-**Step 3: Create a Python Script for Object Detection**
-Create a Python script that loads the YOLOv3 model, processes dash cam footage, and detects stop signs. Here's a simplified overview of the script:
+## License
 
-- Load YOLO model and COCO class labels.
-- Load dash cam footage (replace with your video source).
-- Detect objects in each frame, including stop signs.
-- Apply non-maximum suppression to eliminate duplicate detections.
-- Display the video with bounding boxes around detected stop signs.
-
-**Step 4: Run the Script**
-Save the script, making sure to replace file paths with the appropriate ones for your environment. Execute the script using Python to process the dash cam footage, detect stop signs, and display the video with annotations.
-
-Note: Fine-tuning the YOLO model might be necessary to improve accuracy depending on the quality and conditions of your dash cam footage. You can also consider integrating this with a warning system for real-world applications.
+MIT License — see [LICENSE](LICENSE) for details.
